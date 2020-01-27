@@ -1,0 +1,45 @@
+<div *ngIf="identity" class="search-body">
+    <h1>{{titulo}}</h1>
+    <div class="row search-box">
+        <div class="col-md-4">
+            <input type="text"  required id="filterSearch" class="form-control" name="filterSearch" [(ngModel)]="filterSearch"/>
+            <a class="page-link" [routerLink]="['/buscar/',filterSearch]" class="btn btn-sm btn-success">Buscar</a>
+        </div>        
+    </div>
+
+    <h3>Albums</h3>
+    <ul class='search-list row'>
+        
+        <li *ngFor="let album of albums" class='col-lg-3'>
+            <div class='search-name'>
+                <a [routerLink]="['/album', album._id]">
+                    {{album.title}}
+                </a>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Artistas</h3>
+    <ul class='search-list row'>
+        
+        <li *ngFor="let artist of artists" class='col-lg-3'>
+            <div class='search-name'>
+                <a  [routerLink]="['/artista', artist._id]">
+                    {{artist.name}}
+                </a>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Canciones</h3>
+    <ul class='search-list row'>
+        
+        <li *ngFor="let song of songs" class='col-lg-3'>
+            <div class='search-name'>
+                <a  [routerLink]="['/album', song.album]">
+                    {{song.name}}
+                </a>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,83 @@
+<div class='head-page' *ngIf="identity">
+    <h1>{{titulo}}</h1>    
+</div>
+
+<nav aria-label = "Page navigation">
+    <div class="row">
+        <div class="col-md-6">
+            <select id="genders" class="form-control" [(ngModel)]="genders"  (click)="onGenderList()">
+                <option >Todos</option>
+                <option>Pop</option>
+                <option>Rock</option>
+                <option>Cumbia</option>
+                <option>Rock & Pop</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            
+            <ul class='pagination float-right'>
+                <li class = "page-item"><a class="page-link" [routerLink]="['/albums', prev_page]">&laquo;</a></li>       
+                <li class = "page-item"><a class="page-link" [routerLink]="['/albums', next_page]">&raquo;</a></li>   
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class='clearfix'></div>
+
+<ul class='album-list row' *ngIf="identity">
+    <li *ngFor="let album of albums" class='col-lg-12'>
+
+        <div class="album-songs" *ngIf="genders == 'Todos'">
+            <div id="album-head-card">
+                <div class="image-list">
+                    <img src="{{url + 'get-image-album/' + album.image}}" *ngIf="album.image && album.image != 'null'"/>
+                </div>
+            </div>
+            <div class="data-album">
+                <h1>{{album.title}}</h1>
+                <p class="description">{{album.artist.name}}</p>
+                <p class="description">{{album.artist.gender}}</p>
+                <p class="description">{{album.year}}</p>
+                <p class="description">{{album.description}}</p>
+            </div>
+            <ul class="songs-list" *ngFor="let song of songs">
+                    <li class="song-item" *ngIf="song.album._id == album._id">                  
+                        <a class="btn btn-sm btn-success color-play" (click)="startPlayer(song)">
+                            <span class="fa fa-play" aria-hidden="true"></span>
+                        </a>
+                        <div class="song-title">
+                            {{song.number +' . '+song.name +' . '+song.duration}}
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+            </ul>
+        </div>
+
+        <div class="album-songs" *ngIf="album.artist.gender == genders">
+            <div id="album-head-card">
+                <div class="image-list">
+                    <img src="{{url + 'get-image-album/' + album.image}}" *ngIf="album.image && album.image != 'null'"/>
+                </div>
+            </div>
+            <div class="data-album">
+                <h1>{{album.title}}</h1>
+                <p class="description">{{album.artist.name}}</p>
+                <p class="description">{{album.artist.gender}}</p>
+                <p class="description">{{album.year}}</p>
+                <p class="description">{{album.description}}</p>
+            </div>
+            <ul class="songs-list" *ngFor="let song of songs">
+                    <li class="song-item" *ngIf="song.album._id == album._id">                  
+                        <a class="btn btn-sm btn-success color-play" (click)="startPlayer(song)">
+                            <span class="fa fa-play" aria-hidden="true"></span>
+                        </a>
+                        <div class="song-title">
+                            {{song.number +' . '+song.name +' . '+song.duration}}
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+            </ul>
+        </div>
+    </li>
+</ul>

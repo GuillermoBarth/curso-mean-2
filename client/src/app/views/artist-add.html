@@ -1,0 +1,57 @@
+<div class="col-lg-6 artist-list" *ngIf="identity && identity.role =='ROLE_ADMIN'">
+<h1>{{titulo}}</h1>
+<div *ngIf="alertMessage">
+    <div class="alert alert-primary" role="alert">
+        {{alertMessage}}
+    </div>
+</div>
+<form #formArtist="ngForm" (ngSubmit)="onSubmit()" class="col-lg-6">
+    <p>
+        <label class="font-weight-bold">Nombre de artista</label>
+        <input type="text" #name="ngModel" name="name" [(ngModel)]="artist.name" required class="form-control"/>
+        <span *ngIf="!name.valid && name.touched">
+            El nombre no es valido
+        </span>
+    </p>
+
+    <p>
+        <label class="font-weight-bold">Genero</label>
+        <select type="text" #gender="ngModel" name="gender" [(ngModel)]="artist.gender" required class="form-control">
+            <option>{{artist.gender}}</option>
+            <option>Pop</option>
+            <option>Rock</option>
+            <option>Cumbia</option>
+            <option>Rock & Pop</option>
+        </select>
+        <span *ngIf="!gender.valid && gender.touched">
+            El genero no es valido
+        </span>
+    </p>
+
+    <p>
+        <label class="font-weight-bold">Descripción</label>
+        <textarea #description="ngModel" name="description" [(ngModel)]="artist.description" required class="form-control"></textarea>
+        <span *ngIf="!description.valid && description.touched">
+            La descripción es obligatoria
+        </span>
+    </p>
+
+    <div *ngIf="is_edit">
+        <div class='artist_image_for_edit' *ngIf="artist.image && artist.image != 'null'">
+            <img src = "{{url + 'get-image-artist/' + artist.image}}"/>
+        </div>
+
+        <p>
+            <label class="font-weight-bold">Sube la imagen de Artista</label>
+            <input type="file" placeholder="Subir imagen" (change)="fileChangeEvent($event)"/>
+        </p>
+    </div>
+
+    <input type="submit" value="{{titulo}}" [disabled]="!formArtist.form.valid" class="btn btn-success"/>
+</form>
+</div>
+
+<div class="col-jg-6" *ngIf="!identity || identity.role !='ROLE_ADMIN'">
+    <h1>Error</h1>
+    <p>No tiene acceso a la aplicación</p>
+</div>
